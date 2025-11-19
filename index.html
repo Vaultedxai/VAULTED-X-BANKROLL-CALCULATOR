@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAULTED X Bankroll Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #444;
+        }
+
+        .logo-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .input-section {
+            background: #1e1e1e;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ccc;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 1px solid #555;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .strategy-section {
+            margin-top: 30px;
+        }
+
+        .strategy-label {
+            display: block;
+            margin-bottom: 15px;
+            color: #ccc;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .strategy-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .strategy-btn {
+            background: #2a2a2a;
+            color: #fff;
+            border: 2px solid #444;
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .strategy-btn:hover {
+            border-color: #ffffff;
+            background: #333;
+        }
+
+        .strategy-btn.active {
+            background: #ffffff;
+            color: #000;
+            border-color: #ffffff;
+        }
+
+        .strategy-info {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(45deg, #333333, #555555);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto 0;
+            min-width: 250px;
+        }
+
+        .calculate-btn:hover {
+            background: linear-gradient(45deg, #555555, #333333);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .results {
+            background: #1e1e1e;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+
+        .results h3 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .unit-display {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #ffffff;
+        }
+
+        .unit-amount {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .unit-label {
+            font-size: 1.2rem;
+            color: #aaa;
+        }
+
+        .breakdown {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .breakdown-item {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+
+        .breakdown-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .breakdown-label {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .recommendations {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 4px solid #ffffff;
+            text-align: left;
+        }
+
+        .recommendations h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendations li {
+            color: #ccc;
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .recommendations li:before {
+            content: "•";
+            color: #ffffff;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .strategy-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 2rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">VAULTED X</div>
+            <h1>Bankroll Calculator</h1>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label for="bankroll">Enter Your Bankroll ($):</label>
+                <input type="number" id="bankroll" placeholder="1000" min="1" step="0.01">
+            </div>
+
+            <div class="strategy-section">
+                <label class="strategy-label">Select Your Strategy:</label>
+                <div class="strategy-buttons">
+                    <button class="strategy-btn" id="conservative" onclick="selectStrategy('conservative')">
+                        CONSERVATIVE
+                    </button>
+                    <button class="strategy-btn" id="aggressive" onclick="selectStrategy('aggressive')">
+                        AGGRESSIVE
+                    </button>
+                </div>
+            </div>
+
+            <button class="calculate-btn" onclick="calculateUnit()">Calculate Unit Size</button>
+        </div>
+
+        <div class="results hidden" id="results">
+            <h3>Your Recommended Unit Size</h3>
+            
+            <div class="unit-display">
+                <div class="unit-amount" id="unitAmount">$0.00</div>
+                <div class="unit-label">Per Unit</div>
+            </div>
+
+            <div class="breakdown">
+                <div class="breakdown-item">
+                    <div class="breakdown-value" id="strategy">-</div>
+                    <div class="breakdown-label">Strategy</div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h4>💡 Bankroll Management Tips:</h4>
+                <ul id="tipsList">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedStrategy = null;
+
+        function selectStrategy(strategy) {
+            selectedStrategy = strategy;
+            
+            // Remove active class from all buttons
+            document.getElementById('conservative').classList.remove('active');
+            document.getElementById('aggressive').classList.remove('active');
+            
+            // Add active class to selected button
+            document.getElementById(strategy).classList.add('active');
+        }
+
+        function calculateUnit() {
+            const bankroll = parseFloat(document.getElementById('bankroll').value);
+            
+            if (!bankroll || bankroll <= 0) {
+                alert('Please enter a valid bankroll amount');
+                return;
+            }
+            
+            if (!selectedStrategy) {
+                alert('Please select a strategy (Conservative or Aggressive)');
+                return;
+            }
+
+            // Calculate unit size based on strategy
+            let unitSize;
+            
+            if (selectedStrategy === 'conservative') {
+                unitSize = bankroll * 0.01;
+            } else {
+                unitSize = bankroll * 0.02;
+            }
+
+            // Update results
+            document.getElementById('unitAmount').textContent = '$' + unitSize.toFixed(2);
+            document.getElementById('strategy').textContent = selectedStrategy.charAt(0).toUpperCase() + selectedStrategy.slice(1);
+
+            // Generate tips based on strategy
+            const tips = selectedStrategy === 'conservative' 
+                ? [
+                    'Always bet the units that we provide',
+                    'Always recalculate your unit size when changing bankrolls',
+                    'This strategy protects against losing streaks',
+                    'You can place up to ' + Math.floor(bankroll / unitSize) + ' bets with your current bankroll',
+                    'Conservative approach recommended for long-term growth'
+                ]
+                : [
+                    'Always bet the units that we provide',
+                    'Always recalculate your unit size when changing bankrolls',
+                    'Higher risk = higher potential returns',
+                    'You can place up to ' + Math.floor(bankroll / unitSize) + ' bets with your current bankroll',
+                    'Aggressive approach requires disciplined risk management',
+                    'Consider reducing to conservative if you hit a losing streak'
+                ];
+
+            const tipsList = document.getElementById('tipsList');
+            tipsList.innerHTML = '';
+            tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = tip;
+                tipsList.appendChild(li);
+            });
+
+            // Show results
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        // Add enter key support
+        document.getElementById('bankroll').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && selectedStrategy) {
+                calculateUnit();
+            }
+        });
+    </script>
+</body>
+</html>
